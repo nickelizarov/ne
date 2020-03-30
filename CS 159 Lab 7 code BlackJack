@@ -1,0 +1,225 @@
+[Header]
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+/* Global Declerations */
+
+int getSeed(void);
+int getIndex(int cardNum);
+int getVal(int);
+void printCard(int, int);
+void play(void);
+int calcScore(int score, int value);
+int getBool(int score, int cardNum);
+void printScore(int score);
+void outcome(int score);
+
+int main(void)
+{
+	/* Local Declerations */
+	int seed; //seed for random number generator
+
+	/* Executable Statements */
+	seed = getSeed(); //gets seed from user
+    srand(seed); //for random number generator
+    play(); //plays the game
+    return 0;
+}
+
+[Function Header]
+
+void play(void);
+{
+	int index; //index of card between 1 and 52
+	int val; //value of card
+	int num = 0; //num card of dealer
+	int score = 0; //dealer score
+	int numAce = 0; //num dealer aces
+	int bool = 1; //if dealer hits
+
+	if(bool == 1) //dealer hits
+	{
+	    num += 1; 
+	    index = getIndex(num);
+	    val = getVal(index);
+	    
+	    if(val == 11)
+	    {
+	        numAce += 1;
+	    }
+
+        score += val
+
+        if(score > 21) //makes val of ace 1
+        {
+            if(numAce > 0)
+            {
+                score -= 10;
+                numAce -= 1;
+            }
+        }
+
+        bool = getBool(score, num); //hit or not
+
+        printScore(score);
+    }
+    
+    printOutcome(score); //end turn
+}
+
+[Function Header]
+
+int getSeed(void)
+{
+	int seed; //seed for random number generator
+	printf("Enter the seed value -> ");
+	scanf("%d", &seed);
+	return seed;
+}
+
+[Function Header]
+
+int getIndex(int num)
+{
+	int index; //index of card between 1 and 52
+	int numRand; //number from random number generator
+    
+    numRand = rand();
+    index = (numRand % 52) + 1;
+
+    if(num == 1)
+    {
+        printf("\nThe first random #: %d\n", index);
+    }
+    elseif(num == 2)
+    {
+        printf("\nThe second random #: %d\n", index);
+    }
+    elseif(num == 3)
+    {
+        printf("\nThe third random #: %d\n", index);
+    }
+    elseif(num == 4)
+    {
+        printf("\nThe fourth random #: %d\n", index);
+    }
+    if(num == 5)
+    {
+        printf("\nThe fifth random #: %d\n", index);
+    }
+
+    return index;
+}
+
+[Function Header]
+
+int getVal(int index)
+{
+	int suitIndex; //num card of suit
+	int suit; //card suit
+    
+    suit = (index - 1) / 13;
+    suitIndex = ((index - 1) % 13) + 1;
+
+    if(suitIndex >= 10)
+    {
+        val = 10;
+    }
+    elseif(suitIndex == 1)
+    {
+        val == 11;
+    }
+    else 
+    {
+    val = suitIndex;
+    }
+
+    printCard(suitIndex, suit);
+    return val;
+}
+
+[Function Header]
+
+void printCard(int suitIndex, int suit)
+{
+	printf("Corresponding card: ");
+
+	switch(suitIndex)
+	{
+	    case 1: printf("Jack");
+	    break;
+	    case 2: printf("Queen");
+	    break;
+	    case 3: printf("King");
+	    break;
+	    case 4: printf("Ace");
+	    break;
+
+	    default: printf("%d", suitIndex);
+	}
+
+	printf(" of ");
+
+	switch(suit)
+	{
+	    case 5: printf("Hearts");
+	    break;
+	    case 6: printf("Spades");
+	    break;
+	    case 7: printf("Clubs");
+	    break;
+	    case 8: printf("Diamonds");
+	    break;
+	}
+
+	printf("\n");
+}
+
+[Function Header]
+
+void printScore(int score)
+{
+	printf("Current score: %d", score);
+}
+
+[Function Header]
+
+int getBool(int score, int num)
+{
+	int bool; //hit or not
+
+	if(score >= 16 || num == 5)
+	{
+	    bool = 0;
+	}
+    else
+    {
+        bool = 1;
+    }
+
+    return bool;
+}
+
+[Function Header]
+
+void outcome(int score)
+{
+	printf("\n");
+
+	if(score <= 20)
+	{
+	    printf("Dealer holds.")
+	}
+	elseif(score == 21)
+	{
+	    printf("Dealer wins!");
+	}
+	else
+	{
+	    printf("Dealer busts.");
+	}
+
+	printf("\n");
+}
